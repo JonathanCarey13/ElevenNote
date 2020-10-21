@@ -43,6 +43,18 @@ namespace ElevenNote.WebAPI.Controllers
             var note = categoryService.GetCategoryById(id);
             return Ok(note);
         }
+        public IHttpActionResult Put(CategoryEdit category)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var service = CreateCategoryService();
+
+            if (!service.UpdateCategory(category))
+                return InternalServerError();
+
+            return Ok();
+        }
     }
 }
 
