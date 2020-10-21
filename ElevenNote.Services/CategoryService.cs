@@ -3,8 +3,6 @@ using ElevenNote.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ElevenNote.Services
 {
@@ -80,6 +78,20 @@ namespace ElevenNote.Services
 
                 entity.CategoryName = model.CategoryName;
                 entity.Content = model.Content;
+
+                return ctx.SaveChanges() == 1;
+            }
+        }
+        public bool DeleteCategory(int categoryId)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                    ctx
+                        .Categories
+                        .Single(e => e.CategoryId == categoryId && e.OwnerId == _userId);
+
+                ctx.Categories.Remove(entity);
 
                 return ctx.SaveChanges() == 1;
             }
