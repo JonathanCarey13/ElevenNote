@@ -52,5 +52,22 @@ namespace ElevenNote.Services
                 return query.ToArray();
             }
         }
+        public CategoryDetail GetCategoryById(int id)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                    ctx
+                        .Categories
+                        .Single(e => e.CategoryId == id && e.OwnerId == _userId);
+                return
+                    new CategoryDetail
+                    {
+                        CategoryId = entity.CategoryId,
+                        CategoryName = entity.CategoryName,
+                        Content = entity.Content
+                    };
+            }
+        }
     }
 }
